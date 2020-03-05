@@ -1,24 +1,26 @@
 const mongoose = require('mongoose')
 
-const dbRoute = 'mongodb+srv://todoappDB:todoappdb@cluster0-sjh2l.mongodb.net/test?retryWrites=true&w=majority'
 
 mongoose.connect(
-    process.env.MONGO_URI || dbRoute,
+    process.env.MONGO_URI || 'mongodb://localhost:27017/printshop',
     { useNewUrlParser: true, useCreateIndex: true },
-    function (err) {
-        if (err) throw err
-        console.log('Successfully Connected')
-    }
 )
 
-let db = mongoose.connection;
-
-db.once('open', () => console.log('connected to the database'));
-
-// check if connection with the database is successful
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 module.exports = mongoose
+
+module.exports.checkHealth = async function () {
+    const time = Date.now()
+    const { db } = mongoose.connection
+    const collection = db.collection('healthcheck')
+
+    const query = { _id: 'heartbeat' }
+    const value = { time }
+    await collection.update(query, value, { upsert: true })
+
+    const found = await collection.findOne({ time: { $gte: time } })
+    if (!found) throw new Error('DB Healthcheck Failed')
+    return !!found
+}
 
 
 

@@ -19,6 +19,9 @@ app.use(middleware.cors)
 app.use(bodyParser.json())
 app.use(cookieParser())
 
+// Health check Route
+app.get('/health', api.checkHealth)
+
 // Login route
 app.post('/login', auth.authenticate, auth.login)
 

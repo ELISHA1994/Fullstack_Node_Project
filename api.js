@@ -1,9 +1,11 @@
+const db = require('./db')
 const Orders = require('./models/orders')
 const Products = require('./models/products')
 const Users = require('./models/users')
 const autoCatch = require('./lib/auto-catch')
 
 module.exports = autoCatch({
+    checkHealth,
     getProduct,
     listProducts,
     createProduct,
@@ -14,6 +16,10 @@ module.exports = autoCatch({
     createUser
 })
 
+async function checkHealth (req, res, next) {
+    await db.checkHealth()
+    res.json({ status: 'OK' })
+}
 
 /**
  * Product route handlers
