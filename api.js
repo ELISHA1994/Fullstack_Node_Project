@@ -101,6 +101,7 @@ async function listOrders (req, res, next) {
 async function createUser (req, res, next) {
     const user = await Users.create(req.body)
     const { username, email } = user
+    req.log.info({ username, email }, 'user created')
     res.json({ username, email })
 }
 
@@ -161,7 +162,7 @@ function forbidden (next) {
 // curl -i --cookie cookies http://localhost:1337/orders
 // curl -sX POST http://localhost:1337/orders -H 'Content-Type: application/json' -d '{"buyerEmail": "walter@sobchak.io", "products": ["ck6t9rsc50001rxtg7euralhz"]}' | jq
 // curl -X POST -H 'content-type: application/json' -d '{"username": "admin", "password": "iamthewalrus"}' http://localhost:1337/login | jq -r .token > admin.jwt
-// curl -iX POST -H 'content-type: application/json' -d '{"username": "elisha", "email": "elisha@fullstack.io", "password": "I love surfing"}' http://localhost:1337/users
+// curl -iX POST -H 'content-type: application/json' -d '{"username": "mary", "email": "mary@fullstack.io", "password": "I love surfing"}' http://localhost:1337/users
 // Excerpt From: Nate Murray. “Fullstack Node.js”. Apple Books.
 
 

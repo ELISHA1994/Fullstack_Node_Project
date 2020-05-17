@@ -15,6 +15,7 @@ const port = process.env.PORT || 1337
 const app = express()
 
 // setting middle_wares
+app.use(middleware.logger)
 app.use(middleware.cors)
 app.use(bodyParser.json())
 app.use(cookieParser())

@@ -1,8 +1,23 @@
+const pinoNoir = require('pino-noir')
+const pinoLogger = require('express-pino-logger')
+const { STATUS_CODES } = require('http')
+
 module.exports = {
+    logger: logger(),
     cors,
-    handleError,
     notFound,
+    handleError,
     handleValidationError
+}
+
+function logger () {
+    return pinoLogger({
+        serializers: pinoNoir([
+            'res.headers.set-cookie',
+            'req.headers.cookie',
+            'req.headers.authorization'
+        ])
+    })
 }
 
 function cors( req, res, next) {

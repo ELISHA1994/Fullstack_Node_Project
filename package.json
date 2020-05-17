@@ -14,11 +14,13 @@
     "cookie-parser": "^1.4.4",
     "cuid": "^2.1.8",
     "express": "^4.17.1",
+    "express-pino-logger": "^5.0.0",
     "express-session": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "pino-noir": "^2.2.1",
     "validator": "^12.2.0"
   }
 }
